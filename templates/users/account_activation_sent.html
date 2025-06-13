@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Check your email" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{% translate "Check your email" %}</h2>
+    <p>{% translate "We have sent an email to your registered email address with an activation link. Please click the link to activate your account." %}</p>
+    <p>{% translate "If you don't receive the email, please check your spam folder." %}</p>
+</div>
+{% endblock %} 

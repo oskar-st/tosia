@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Edit Video{% else %}Add Video{% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit Video{% else %}Add New Video{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+        <a href="{% url 'videos:videos_list' %}">Cancel</a>
+    </form>
+{% endblock %} 

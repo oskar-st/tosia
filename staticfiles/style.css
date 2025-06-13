@@ -1,0 +1,96 @@
+@font-face {
+    font-family: 'Comic Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: local('Comic Sans MS'),
+         local('Comic Sans'),
+         url('https://fonts.gstatic.com/s/comicneue/v8/4UaHrEJDsxBrF37olUeDx63j5pN1MwI.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Comic Neue';
+    font-style: normal;
+    font-weight: 700;
+    font-display: block;
+    src: local('Comic Sans MS Bold'),
+         local('Comic Sans Bold'),
+         url('https://fonts.gstatic.com/s/comicneue/v8/4UaErEJDsxBrF37olUeD_xHMwpteLwtHJlc.ttf') format('truetype');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('repeatable.png');
+    background-repeat: repeat;
+    background-color: #e6f3ff; /* Fallback color if image fails to load */
+    font-family: 'Comic Neue', 'Comic Sans MS', 'Comic Sans', cursive;
+    text-align: center;
+    color: #333;
+}
+
+.container {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
+    margin-top: 2rem;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 250px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.contact {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.contact a {
+    color: #ff69b4;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.contact a:hover {
+    color: #ff1493;
+}
+
+.logo-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.control-button {
+    font-size: 2rem;
+    background: #fff;
+    border: 2px solid #ff69b4;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #ff69b4;
+}
+
+.control-button:hover {
+    background: #ff69b4;
+    color: #fff;
+}
+
+.name-heading {
+    font-family: 'Arizonia', cursive;
+    font-size: 3.5rem;
+    color: #ff69b4;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+} 

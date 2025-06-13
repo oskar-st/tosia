@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Register" %}{% endblock %}
+
+{% block content %}
+<style>
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 90px); /* Adjust based on header height */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .register-box {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        text-align: center;
+    }
+    .register-box h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .register-box p {
+        text-align: left;
+        margin-bottom: 15px;
+    }
+    .register-box input[type="text"],
+    .register-box input[type="email"],
+    .register-box input[type="password"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    .register-box button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        margin-top: 10px;
+    }
+    .register-box button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    .register-box .helptext {
+        font-size: 0.8em;
+        color: #666;
+        text-align: left;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
+    .register-box .errorlist li {
+        color: red;
+        text-align: left;
+        list-style: none;
+        padding-left: 0;
+    }
+    .register-box ul.errorlist {
+        padding-left: 0;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="register-container">
+    <div class="register-box">
+        <h2>{% translate "Register" %}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label for="id_username">{% translate "Username:" %}</label>
+                {{ form.username }}
+                {% if form.username.help_text %}
+                    <span class="helptext">{{ form.username.help_text }}</span>
+                {% endif %}
+                {% for error in form.username.errors %}
+                    <ul class="errorlist"><li>{{ error }}</li></ul>
+                {% endfor %}
+            </p>
+
+            <p>
+                <label for="id_email">{% translate "Email:" %}</label>
+                {{ form.email }}
+                {% if form.email.help_text %}
+                    <span class="helptext">{{ form.email.help_text }}</span>
+                {% endif %}
+                {% for error in form.email.errors %}
+                    <ul class="errorlist"><li>{{ error }}</li></ul>
+                {% endfor %}
+            </p>
+
+            <p>
+                <label for="id_password">{% translate "Password:" %}</label>
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                    <ul class="errorlist"><li>{{ error }}</li></ul>
+                {% endfor %}
+            </p>
+
+            <p>
+                <label for="id_password2">{% translate "Password confirmation:" %}</label>
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}
+                    <ul class="errorlist"><li>{{ error }}</li></ul>
+                {% endfor %}
+            </p>
+
+            {% if form.non_field_errors %}
+                <ul class="errorlist">
+                    {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <button type="submit">{% translate "Register" %}</button>
+        </form>
+        <p>{% translate "Already have an account?" %} <a href="{% url 'users:login' %}">{% translate "Login here." %}</a></p>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,203 @@
+# Polish translations for Django project.
+# Copyright (C) 2024
+# This file is distributed under the same license as the Django project.
+msgid ""
+msgstr ""
+"Project-Id-Version: Django\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-13 15:15+0000\n"
+"PO-Revision-Date: 2024-03-19 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Polish\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
+
+#: templates/base.html:8
+msgid "Tosia"
+msgstr "Tosia"
+
+#: templates/base.html:162
+msgid "Antonina Kurczyńska Logo"
+msgstr "Logo Antoniny Kurczyńskiej"
+
+#: templates/base.html:166
+msgid "Hello"
+msgstr "Cześć"
+
+#: templates/base.html:169
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: templates/base.html:172 templates/videos/videos_list.html:4
+#: templates/videos/videos_list.html:7
+msgid "Videos"
+msgstr "Filmy"
+
+#: templates/base.html:173
+msgid "Users"
+msgstr "Użytkownicy"
+
+#: templates/base.html:176
+msgid "Sign up"
+msgstr "Zarejestruj się"
+
+#: templates/base.html:177 templates/users/login.html:4
+#: templates/users/login.html:68 templates/users/login.html:90
+msgid "Login"
+msgstr "Zaloguj się"
+
+#: templates/base.html:179
+msgid "Blog"
+msgstr "Blog"
+
+#: templates/home.html:4
+msgid "Welcome"
+msgstr "Witaj"
+
+#: templates/home.html:7
+msgid "Welcome to Tosia's Page"
+msgstr "Witaj na stronie Tosii"
+
+#: templates/home.html:8
+msgid ""
+"This is the landing page. Explore the site or sign up to access more "
+"features."
+msgstr ""
+"To jest strona główna. Zwiedzaj stronę lub zarejestruj się, aby uzyskać "
+"dostęp do większej liczby funkcji."
+
+#: templates/users/account_activation_sent.html:4
+#: templates/users/account_activation_sent.html:8
+msgid "Check your email"
+msgstr "Sprawdź swój e-mail"
+
+#: templates/users/account_activation_sent.html:9
+msgid ""
+"We have sent an email to your registered email address with an activation "
+"link. Please click the link to activate your account."
+msgstr "Wysłaliśmy e-mail na Twój zarejestrowany adres e-mail z linkiem aktywacyjnym. Kliknij link, aby aktywować swoje konto."
+
+#: templates/users/account_activation_sent.html:10
+msgid "If you don't receive the email, please check your spam folder."
+msgstr "Jeśli nie otrzymałeś e-maila, sprawdź folder spamu."
+
+#: templates/users/login.html:92
+msgid "Don't have an account?"
+msgstr "Nie masz konta?"
+
+#: templates/users/login.html:92
+msgid "Register here."
+msgstr "Zarejestruj się tutaj."
+
+#: templates/users/register.html:4 templates/users/register.html:74
+#: templates/users/register.html:122
+msgid "Register"
+msgstr "Zarejestruj się"
+
+#: templates/users/register.html:78
+msgid "Username:"
+msgstr "Nazwa użytkownika:"
+
+#: templates/users/register.html:89
+msgid "Email:"
+msgstr "E-mail:"
+
+#: templates/users/register.html:100
+msgid "Password:"
+msgstr "Hasło:"
+
+#: templates/users/register.html:108
+msgid "Password confirmation:"
+msgstr "Potwierdzenie hasła:"
+
+#: templates/users/register.html:124
+msgid "Already have an account?"
+msgstr "Masz już konto?"
+
+#: templates/users/register.html:124
+msgid "Login here."
+msgstr "Zaloguj się tutaj."
+
+#: templates/users/users_list.html:4 templates/users/users_list.html:9
+msgid "User List"
+msgstr "Lista Użytkowników"
+
+#: templates/users/users_list.html:14
+#, fuzzy
+#| msgid "Username:"
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: templates/users/users_list.html:15
+#, fuzzy
+#| msgid "Email:"
+msgid "Email"
+msgstr "E-mail"
+
+#: templates/users/users_list.html:16
+msgid "Admin"
+msgstr "Administrator"
+
+#: templates/users/users_list.html:17
+msgid "Actions"
+msgstr "Akcje"
+
+#: templates/users/users_list.html:27
+msgid "Yes"
+msgstr "Tak"
+
+#: templates/users/users_list.html:29
+msgid "No"
+msgstr "Nie"
+
+#: templates/users/users_list.html:37
+msgid "Remove Admin"
+msgstr "Usuń Administratora"
+
+#: templates/users/users_list.html:42
+msgid "Make Admin"
+msgstr "Uczyń Administratorem"
+
+#: templates/users/users_list.html:47
+msgid "Delete User"
+msgstr "Usuń Użytkownika"
+
+#: templates/users/users_list.html:50
+msgid "(You)"
+msgstr "(Ty)"
+
+#: templates/users/users_list.html:56
+msgid "No users found."
+msgstr "Nie znaleziono użytkowników."
+
+#: templates/users/users_list.html:62
+msgid "Add New User"
+msgstr "Dodaj Nowego Użytkownika"
+
+#: templates/users/users_list.html:66
+msgid "Add User"
+msgstr "Dodaj Użytkownika"
+
+#: templates/videos/videos_list.html:8
+msgid "Add New Video"
+msgstr "Dodaj Nowy Film"
+
+#: templates/videos/videos_list.html:12
+msgid "Watch"
+msgstr "Obejrzyj"
+
+#: templates/videos/videos_list.html:13
+msgid "Edit"
+msgstr "Edytuj"
+
+#: templates/videos/videos_list.html:14
+msgid "Delete"
+msgstr "Usuń"
+
+#: templates/videos/videos_list.html:17
+msgid "No videos yet."
+msgstr "Brak filmów."

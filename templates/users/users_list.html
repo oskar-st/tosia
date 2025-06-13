@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "User List" %}{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="content">
+        <h2>{% translate "User List" %}</h2>
+
+        <table class="user-list-table">
+            <thead>
+                <tr>
+                    <th>{% translate "Username" %}</th>
+                    <th>{% translate "Email" %}</th>
+                    <th>{% translate "Admin" %}</th>
+                    <th>{% translate "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user_obj in users %}
+                <tr>
+                    <td>{{ user_obj.username }}</td>
+                    <td>{{ user_obj.email }}</td>
+                    <td>
+                        {% if user_obj.is_admin %}
+                            {% translate "Yes" %}
+                        {% else %}
+                            {% translate "No" %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user_obj.id != request.user.id %}
+                            {% if user_obj.is_admin %}
+                                <form action="{% url 'users:remove_admin_role' user_obj.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button-danger">{% translate "Remove Admin" %}</button>
+                                </form>
+                            {% else %}
+                                <form action="{% url 'users:add_admin_role' user_obj.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="button-success">{% translate "Make Admin" %}</button>
+                                </form>
+                            {% endif %}
+                            <form action="{% url 'users:delete_user' user_obj.id %}" method="post" style="display:inline; margin-left: 10px;">
+                                {% csrf_token %}
+                                <button type="submit" class="button-danger">{% translate "Delete User" %}</button>
+                            </form>
+                        {% else %}
+                            <em>{% translate "(You)" %}</em>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">{% translate "No users found." %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>{% translate "Add New User" %}</h3>
+        <form method="post" action="{% url 'users:add_user' %}">
+            {% csrf_token %}
+            {{ add_user_form.as_p }}
+            <button type="submit">{% translate "Add User" %}</button>
+        </form>
+    </div>
+</div>
+<style>
+    .user-list-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .user-list-table th,
+    .user-list-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    .user-list-table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+    .button-success {
+        background-color: #28a745;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .button-success:hover {
+        background-color: #218838;
+    }
+    .button-danger {
+        background-color: #dc3545;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+    }
+    .button-danger:hover {
+        background-color: #c82333;
+    }
+</style>
+{% endblock %} 

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% translate "Videos" %}{% endblock %}
+
+{% block content %}
+    <h1>{% translate "Videos" %}</h1>
+    <a href="{% url 'videos:video_create' %}">{% translate "Add New Video" %}</a>
+    <ul>
+        {% for video in videos %}
+            <li>
+                {{ video.title }} - <a href="{{ video.youtube_url }}" target="_blank">{% translate "Watch" %}</a>
+                <a href="{% url 'videos:video_update' video.pk %}">{% translate "Edit" %}</a>
+                <a href="{% url 'videos:video_delete' video.pk %}">{% translate "Delete" %}</a>
+            </li>
+        {% empty %}
+            <li>{% translate "No videos yet." %}</li>
+        {% endfor %}
+    </ul>
+{% endblock %} 

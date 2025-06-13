@@ -1,0 +1,67 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% translate "Tosia" %}{% endblock %}</title>
+    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/comicneue/v8/4UaHrEJDsxBrF37olUeDx63j5pN1MwI.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/comicneue/v8/4UaErEJDsxBrF37olUeD_xHMwpteLwtHJlc.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="{% static 'logo.png' %}" alt="{% translate "Antonina Kurczyńska Logo" %}">
+            </div>
+            <div class="nav">
+                {% if user.is_authenticated %}
+                    <div class="welcome-message">{% trans "Welcome" %}, {{ user.username }}!</div>
+                {% endif %}
+                <a href="{% url 'main:home' %}">{% trans "Home" %}</a>
+                <a href="{% url 'blog:blog_list' %}">{% trans "Blog" %}</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'users:users_list' %}">{% trans "Users" %}</a>
+                    <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-button">{% trans "Logout" %}</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'users:login' %}">{% trans "Login" %}</a>
+                    <a href="{% url 'users:register' %}">{% trans "Register" %}</a>
+                {% endif %}
+
+                {# Language Switcher #}
+                <div class="language-selector">
+                    <form action="/i18n/setlang/" method="post" class="language-form">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="/">
+                        <select name="language" onchange="this.form.submit()" class="language-select">
+                            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                            <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>Polski</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="content">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html> 
