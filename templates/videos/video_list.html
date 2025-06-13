@@ -1,30 +1,115 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Video List{% endblock %}
+{% block title %}{% trans "Videos" %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>Video List</h2>
-    {% if user.is_authenticated and user.is_admin %}
-        <p><a href="{% url 'video_new' %}" class="control-button">Add New Video</a></p>
+<div class="videos-container">
+    <h1>{% trans "Videos" %}</h1>
+    
+    {% if user.is_staff %}
+    <div class="admin-controls">
+        <a href="{% url 'videos:video_create' %}" class="btn btn-primary">{% trans "Add Video" %}</a>
+    </div>
     {% endif %}
-    {% if videos %}
-        <ul>
-            {% for video in videos %}
-                <li>
-                    <h3>{{ video.title }}</h3>
-                    <iframe width="560" height="315" src="{{ video.youtube_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    {% if user.is_authenticated and user.is_admin %}
-                        <p>
-                            <a href="{% url 'video_edit' video.pk %}" class="control-button">Edit</a>
-                            <a href="{% url 'video_delete' video.pk %}" class="control-button">Delete</a>
-                        </p>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No videos available.</p>
-    {% endif %}
+
+    <div class="video-list">
+        {% for video in videos %}
+        <div class="video-item">
+            {% if video.thumbnail_url %}
+            <img src="{{ video.thumbnail_url }}" 
+                 alt="{% trans 'Video thumbnail' %}" 
+                 class="video-thumbnail"
+                 width="40" 
+                 height="40"
+                 onerror="this.onerror=null; this.src='https://img.youtube.com/vi/{{ video.youtube_url|slice:'32:'|slice:':11' }}/default.jpg';">
+            {% else %}
+            <div class="no-thumbnail">!</div>
+            {% endif %}
+            <div class="video-info">
+                <h3>{{ video.title }}</h3>
+                <p>{{ video.description }}</p>
+            </div>
+            {% if user.is_staff %}
+            <div class="video-actions">
+                <a href="{% url 'videos:video_update' video.id %}" class="btn btn-sm btn-primary">{% trans "Edit" %}</a>
+                <form action="{% url 'videos:video_delete' video.id %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('{% trans "Are you sure you want to delete this video?" %}')">{% trans "Delete" %}</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>{% trans "No videos available." %}</p>
+        {% endfor %}
+    </div>
 </div>
+
+<style>
+.videos-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.video-list {
+    margin-top: 20px;
+}
+
+.video-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    gap: 10px;
+}
+
+.video-thumbnail {
+    flex-shrink: 0;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.no-thumbnail {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffebee;
+    color: #c62828;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.video-info {
+    flex-grow: 1;
+}
+
+.video-info h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.video-info p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.video-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.admin-controls {
+    margin-bottom: 20px;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+</style>
 {% endblock %} 

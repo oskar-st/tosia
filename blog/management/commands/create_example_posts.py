@@ -1,21 +1,23 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from blog.models import BlogPost
+from django.utils import timezone
+
+User = get_user_model()
 
 class Command(BaseCommand):
     help = 'Creates example blog posts'
 
     def handle(self, *args, **kwargs):
-        User = get_user_model()
-        
         # Create a superuser if it doesn't exist
         if not User.objects.filter(username='admin').exists():
             User.objects.create_superuser('admin', 'admin@example.com', 'admin')
-        
+            self.stdout.write(self.style.SUCCESS('Created superuser "admin"'))
+
         admin = User.objects.get(username='admin')
-        
+
         # Example blog posts
-        posts = [
+        example_posts = [
             {
                 'title': 'My First Violin Lesson! 🎻',
                 'content': '''Hey everyone! Today was my first violin lesson and it was AMAZING! 🎵 
@@ -47,12 +49,14 @@ I'm thinking of making a whole series of cat portraits. Maybe I'll even start ta
 Do you guys like to paint? What's your favorite medium? Let me know in the comments! 💖'''
             }
         ]
-        
-        for post_data in posts:
-            BlogPost.objects.create(
-                title=post_data['title'],
-                content=post_data['content'],
-                author=admin
-            )
-        
-        self.stdout.write(self.style.SUCCESS('Successfully created example blog posts')) 
+
+        # Create the posts
+        for post_data in example_posts:
+            if not BlogPost.objects.filter(title=post_data['title']).exists():
+                BlogPost.objects.create(
+                    title=post_data['title'],
+                    content=post_data['content'],
+                    author=admin,
+                    created_at=timezone.now()
+                )
+                self.stdout.write(self.style.SUCCESS(f'Created post: {post_data["title"]}')) 

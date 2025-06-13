@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import BlogPost
@@ -25,7 +25,7 @@ def add_post(request):
                 author=request.user
             )
             messages.success(request, _('Blog post created successfully!'))
-            return redirect('blog_list')
+            return redirect('blog:blog_list')
     return render(request, 'blog/add_post.html')
 
 @login_required
@@ -34,4 +34,23 @@ def delete_post(request, post_id):
     if request.user == post.author or request.user.is_staff:
         post.delete()
         messages.success(request, _('Blog post deleted successfully!'))
-    return redirect('blog_list')
+    return redirect('blog:blog_list')
+
+@login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id)
+    if request.user != post.author and not request.user.is_staff:
+        messages.error(request, _('You do not have permission to edit this post.'))
+        return redirect('blog:blog_list')
+    
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        if title and content:
+            post.title = title
+            post.content = content
+            post.save()
+            messages.success(request, _('Blog post updated successfully!'))
+            return redirect('blog:blog_list')
+    
+    return render(request, 'blog/edit_post.html', {'post': post})

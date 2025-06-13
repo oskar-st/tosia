@@ -33,6 +33,7 @@ urlpatterns += i18n_patterns(
     path('', include('main.urls')),
     path('blog/', include('blog.urls')),
     path('users/', include('users.urls')),
+    path('videos/', include('videos.urls')),
     prefix_default_language=False
 )
 
