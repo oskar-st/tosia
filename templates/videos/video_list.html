@@ -8,40 +8,47 @@
     <h1>{% trans "Videos" %}</h1>
     
     {% if user.is_staff %}
-    <div class="admin-controls">
-        <a href="{% url 'videos:video_create' %}" class="btn btn-primary">{% trans "Add Video" %}</a>
+    <div class="add-video">
+        <a href="{% url 'videos:video_create' %}" class="button">{% trans "Add Video" %}</a>
     </div>
     {% endif %}
-
-    <div class="video-list">
+    
+    <div class="videos-list">
         {% for video in videos %}
         <div class="video-item">
-            {% if video.thumbnail_url %}
-            <img src="{{ video.thumbnail_url }}" 
-                 alt="{% trans 'Video thumbnail' %}" 
-                 class="video-thumbnail"
-                 width="40" 
-                 height="40"
-                 onerror="this.onerror=null; this.src='https://img.youtube.com/vi/{{ video.youtube_url|slice:'32:'|slice:':11' }}/default.jpg';">
-            {% else %}
-            <div class="no-thumbnail">!</div>
-            {% endif %}
-            <div class="video-info">
-                <h3>{{ video.title }}</h3>
-                <p>{{ video.description }}</p>
+            <div class="video-header">
+                <div class="video-thumbnail">
+                    <a href="https://www.youtube.com/watch?v={{ video.youtube_id }}" target="_blank" rel="noopener noreferrer">
+                        <img src="https://i.ytimg.com/vi/{{ video.youtube_id }}/mqdefault.jpg" alt="{{ video.title }}" loading="lazy">
+                    </a>
+                </div>
+                <div class="video-info">
+                    <h2>{{ video.title }}</h2>
+                    <p class="video-date">{{ video.created_at|date:"F j, Y" }}</p>
+                </div>
+                <div class="video-actions">
+                    <a href="https://www.youtube.com/watch?v={{ video.youtube_id }}" target="_blank" rel="noopener noreferrer" class="watch-link">
+                        {% trans "Watch on YouTube" %}
+                    </a>
+                    {% if user.is_staff %}
+                    <a href="{% url 'videos:video_update' video.id %}" class="button">{% trans "Edit" %}</a>
+                    <form method="post" action="{% url 'videos:video_delete' video.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="button delete" onclick="return confirm('{% trans "Are you sure you want to delete this video?" %}')">{% trans "Delete" %}</button>
+                    </form>
+                    <form method="post" action="{% url 'videos:video_toggle_public' video.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="button {% if video.is_public %}public{% else %}private{% endif %}">
+                            {% if video.is_public %}{% trans "Public" %}{% else %}{% trans "Private" %}{% endif %}
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
             </div>
-            {% if user.is_staff %}
-            <div class="video-actions">
-                <a href="{% url 'videos:video_update' video.id %}" class="btn btn-sm btn-primary">{% trans "Edit" %}</a>
-                <form action="{% url 'videos:video_delete' video.id %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('{% trans "Are you sure you want to delete this video?" %}')">{% trans "Delete" %}</button>
-                </form>
+            <div class="video-content">
+                {{ video.description|linebreaks }}
             </div>
-            {% endif %}
         </div>
-        {% empty %}
-        <p>{% trans "No videos available." %}</p>
         {% endfor %}
     </div>
 </div>
@@ -53,63 +60,123 @@
     padding: 20px;
 }
 
-.video-list {
-    margin-top: 20px;
+.add-video {
+    margin-bottom: 20px;
+}
+
+.videos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .video-item {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.video-header {
     display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-    gap: 10px;
+    gap: 20px;
+    margin-bottom: 20px;
+    align-items: flex-start;
 }
 
 .video-thumbnail {
     flex-shrink: 0;
+    width: 60px;
+    height: 60px;
     border-radius: 4px;
-    object-fit: cover;
+    overflow: hidden;
+    background: #000;
 }
 
-.no-thumbnail {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffebee;
-    color: #c62828;
-    font-size: 16px;
-    font-weight: bold;
-    border-radius: 4px;
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 .video-info {
     flex-grow: 1;
 }
 
-.video-info h3 {
-    margin: 0;
-    font-size: 1.2em;
+.video-info h2 {
+    margin-top: 0;
+    color: #333;
 }
 
-.video-info p {
-    margin: 5px 0 0;
+.video-date {
     color: #666;
+    font-size: 0.9em;
+    margin-bottom: 0;
 }
 
 .video-actions {
     display: flex;
-    gap: 5px;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 
-.admin-controls {
+.watch-link {
+    display: inline;
+    color: #ff0000;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.watch-link:hover {
+    text-decoration: underline;
+}
+
+.video-content {
     margin-bottom: 20px;
 }
 
-.btn-sm {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: normal;
+    background-color: #007bff;
+    color: white;
+    width: 70px;
+    height: 32px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button.delete {
+    background-color: #dc3545;
+}
+
+.button.public {
+    background-color: #28a745;
+}
+
+.button.private {
+    background-color: #6c757d;
 }
 </style>
 {% endblock %} 

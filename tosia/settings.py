@@ -70,6 +70,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
+                'django.template.context_processors.static',
+                'tosia.context_processors.public_content',
             ],
         },
     },
@@ -83,8 +85,12 @@ WSGI_APPLICATION = 'tosia.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'tosia_db',
+        'USER': 'tosia_user',
+        'PASSWORD': 'tosia_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
