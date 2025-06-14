@@ -201,3 +201,48 @@ msgstr "Usuń"
 #: templates/videos/videos_list.html:17
 msgid "No videos yet."
 msgstr "Brak filmów."
+
+msgid "You have successfully logged out."
+msgstr "Zostałeś pomyślnie wylogowany."
+
+msgid "You have successfully logged in."
+msgstr "Zostałeś pomyślnie zalogowany."
+
+msgid "You are now logged in as %(username)s."
+msgstr "Jesteś zalogowany jako %(username)s."
+
+msgid "Watch on YouTube"
+msgstr "Obejrzyj na YouTube"
+
+msgid "Private"
+msgstr "Prywatny"
+
+msgid "Public"
+msgstr "Publiczny"
+
+msgid "Username must be at least 6 characters."
+msgstr "Nazwa użytkownika musi mieć co najmniej 6 znaków."
+
+msgid "Username must be at most 20 characters."
+msgstr "Nazwa użytkownika może mieć maksymalnie 20 znaków."
+
+msgid "A user with that username already exists."
+msgstr "Użytkownik o takiej nazwie już istnieje."
+
+msgid "Password must be at least 6 characters."
+msgstr "Hasło musi mieć co najmniej 6 znaków."
+
+msgid "Password must be at most 20 characters."
+msgstr "Hasło może mieć maksymalnie 20 znaków."
+
+msgid "The two password fields didn't match."
+msgstr "Hasła nie są zgodne."
+
+msgid "A user with that email already exists."
+msgstr "Użytkownik o takim adresie e-mail już istnieje."
+
+msgid "Username must be between 6 and 20 characters."
+msgstr "Nazwa użytkownika musi mieć od 6 do 20 znaków."
+
+msgid "Password must be between 6 and 20 characters."
+msgstr "Hasło musi mieć od 6 do 20 znaków."

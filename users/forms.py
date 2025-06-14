@@ -2,34 +2,68 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import CustomUser
+from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
-class CustomUserCreationForm(forms.ModelForm):
+class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     password = forms.CharField(label="Password", widget=forms.PasswordInput, min_length=6, max_length=20)
-    password2 = forms.CharField(label="Password confirmation", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Potwierdź hasło", widget=forms.PasswordInput)
 
     class Meta:
-        model = CustomUser
-        fields = ('username', 'email')
+        model = get_user_model()
+        fields = ('username', 'email', 'password1', 'password2')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].label = _('Username:')
+        self.fields['email'].label = _('Email:')
+        self.fields['password1'].label = _('Password:')
+        self.fields['password2'].label = _('Confirm password:')
+        
+        # Update help text
+        self.fields['username'].help_text = _('Username must be between 6 and 20 characters.')
+        self.fields['password1'].help_text = _('Password must be between 6 and 20 characters.')
+        
+        # Update error messages
+        self.fields['username'].error_messages = {
+            'required': _('Username is required.'),
+            'min_length': _('Username must be at least 6 characters.'),
+            'max_length': _('Username must be at most 20 characters.'),
+            'unique': _('A user with that username already exists.'),
+        }
+        self.fields['password1'].error_messages = {
+            'required': _('Password is required.'),
+            'min_length': _('Password must be at least 6 characters.'),
+            'max_length': _('Password must be at most 20 characters.'),
+        }
+        self.fields['password2'].error_messages = {
+            'required': _('Password confirmation is required.'),
+            'password_mismatch': _('The two password fields didn\'t match.'),
+        }
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
-        if not (6 <= len(username) <= 20):
-            raise ValidationError("Nazwa użytkownika musi mieć od 6 do 20 znaków.")
+        if len(username) < 6:
+            raise forms.ValidationError(_('Username must be at least 6 characters.'))
+        if len(username) > 20:
+            raise forms.ValidationError(_('Username must be at most 20 characters.'))
         return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if get_user_model().objects.filter(email=email).exists():
+            raise forms.ValidationError(_('A user with that email already exists.'))
+        return email
 
     def clean(self):
         cleaned_data = super().clean()
-
-        password = cleaned_data.get("password")
-        password2 = cleaned_data.get("password2")
-
+        password = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        
         if password and password2 and password != password2:
-            self.add_error('password2', "Hasła nie są zgodne")
-
-        if password and not (6 <= len(password) <= 20):
-            self.add_error('password', "Hasło musi mieć od 6 do 20 znaków.")
-
+            raise forms.ValidationError(_('The two password fields didn\'t match.'))
+        
         return cleaned_data
 
     def save(self, commit=True):
@@ -38,12 +72,6 @@ class CustomUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['username'].help_text = "Od 6 do 20 znaków." # Updated help text
-        self.fields['password'].help_text = None
-        self.fields['password2'].help_text = None # No help text for password confirmation
 
     def clean(self):
         cleaned_data = super().clean()
