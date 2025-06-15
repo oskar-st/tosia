@@ -1,1 +1,47 @@
-__pycache__/\n*.pyc\n*.pyo\n*.pyd\n.Python\nenv/\nbuild/\ndevelop-eggs/\ndist/\ndownloads/\neggs/\n.eggs/\nlib/\nlib64/\nparts/\nsdist/\nvar/\n*.egg-info/\n.installed.cfg\n*.egg\n.env\n.venv\nvenv/\nENV/\n.idea/\n.vscode/\n*.swp\n*.swo\n.DS_Store\n*.log\n*.sqlite3\nmedia/\nstatic/admin/\nstatic/rest_framework/\n
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+env/
+.venv/
+venv/
+ENV/
+
+# Django DB
+*.sqlite3
+
+# Logs
+*.log
+
+# Media (uploads)
+media/
+
+# System files
+.DS_Store
+*.swp
+*.swo
+
+# IDEs
+.idea/
+.vscode/
+
+# Packaging
+*.egg-info/
+.eggs/
+*.egg
+build/
+dist/
+
+# Python environment
+.Python
+.installed.cfg
+
+# Static – include your own, ignore built-in Django stuff
+static/admin/
+static/rest_framework/
+
+# Secrets
+.env
