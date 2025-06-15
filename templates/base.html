@@ -2,18 +2,15 @@
 {% load static %}
 
 <!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% translate "Tosia" %}{% endblock %}</title>
+    <title>{% block title %}{% trans "Tosia" %}{% endblock %}</title>
     <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
 </head>
 <body>
     <div class="header">
@@ -44,11 +41,12 @@
                     <a href="{% url 'users:login' %}">{% trans "Login" %}</a>
                     <a href="{% url 'users:register' %}">{% trans "Register" %}</a>
                 {% endif %}
-                <form action="{% url 'set_language' %}" method="post" style="display: inline;">
+
+                <!-- Language dropdown -->
+                <form method="post" action="{% url 'set_language' %}" style="display:inline;">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                    <select name="language" onchange="this.form.submit()" style="padding: 4px; border-radius: 4px; border: 1px solid #ccc; background: white;">
-                        {% get_current_language as LANGUAGE_CODE %}
+                    <select name="language" onchange="this.form.submit();" style="padding: 4px; border-radius: 4px;">
                         <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
                         <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>Polski</option>
                     </select>
@@ -56,6 +54,7 @@
             </div>
         </div>
     </div>
+
     <div class="main-container">
         <div class="content">
             {% if messages %}
@@ -65,31 +64,8 @@
                     </div>
                 {% endfor %}
             {% endif %}
-            {% block content %}
-            {% endblock %}
+            {% block content %}{% endblock %}
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const languageForm = document.querySelector('form[action="/i18n/setlang/"]');
-            if (languageForm) {
-                languageForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(this);
-                    fetch(this.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
-                        }
-                    }).then(response => {
-                        if (response.ok) {
-                            window.location.reload();
-                        }
-                    });
-                });
-            }
-        });
-    </script>
 </body>
-</html> 
+</html>
