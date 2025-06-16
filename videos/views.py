@@ -23,19 +23,19 @@ class VideoForm(forms.ModelForm):
             (r'(?:youtube\.com\/v\/)([^&\n?]+)', lambda m: f'https://www.youtube.com/watch?v={m.group(1)}'),
             (r'(?:youtube\.com\/watch\?.*&v=)([^&\n?]+)', lambda m: f'https://www.youtube.com/watch?v={m.group(1)}'),
         ]
-        
+
         for pattern, replacement in patterns:
             match = re.search(pattern, url)
             if match:
                 return replacement(match)
-        
+
         raise forms.ValidationError('Please enter a valid YouTube URL')
 
 def videos_list(request):
     if request.user.is_staff:
-        videos = Video.objects.all()
+        videos = Video.objects.all().order_by('id')  # ordering fixed
     else:
-        videos = Video.objects.filter(is_public=True)
+        videos = Video.objects.filter(is_public=True).order_by('id')
     return render(request, 'videos/video_list.html', {'videos': videos})
 
 @login_required
