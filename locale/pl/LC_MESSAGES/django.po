@@ -6,23 +6,22 @@ msgstr ""
 "Project-Id-Version: Django\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-13 15:15+0000\n"
-"PO-Revision-Date: 2024-03-19 12:00+0000\n"
+"PO-Revision-Date: 2025-06-16 00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
-"|| n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #: templates/base.html:8
 msgid "Tosia"
 msgstr "Tosia"
 
 #: templates/base.html:162
-msgid "Antonina Kurczyńska Logo"
-msgstr "Logo Antoniny Kurczyńskiej"
+msgid "Logo"
+msgstr "Logo"
 
 #: templates/base.html:166
 msgid "Hello"
@@ -32,8 +31,7 @@ msgstr "Cześć"
 msgid "Logout"
 msgstr "Wyloguj"
 
-#: templates/base.html:172 templates/videos/videos_list.html:4
-#: templates/videos/videos_list.html:7
+#: templates/base.html:172 templates/videos/videos_list.html:4 templates/videos/videos_list.html:7
 msgid "Videos"
 msgstr "Filmy"
 
@@ -45,8 +43,7 @@ msgstr "Użytkownicy"
 msgid "Sign up"
 msgstr "Zarejestruj się"
 
-#: templates/base.html:177 templates/users/login.html:4
-#: templates/users/login.html:68 templates/users/login.html:90
+#: templates/base.html:177 templates/users/login.html:4 templates/users/login.html:68 templates/users/login.html:90
 msgid "Login"
 msgstr "Zaloguj się"
 
@@ -54,31 +51,20 @@ msgstr "Zaloguj się"
 msgid "Blog"
 msgstr "Blog"
 
-#: templates/home.html:4
-msgid "Welcome"
-msgstr "Witaj"
-
 #: templates/home.html:7
 msgid "Welcome to Tosia's Page"
 msgstr "Witaj na stronie Tosii"
 
 #: templates/home.html:8
-msgid ""
-"This is the landing page. Explore the site or sign up to access more "
-"features."
-msgstr ""
-"To jest strona główna. Zwiedzaj stronę lub zarejestruj się, aby uzyskać "
-"dostęp do większej liczby funkcji."
+msgid "This is the landing page. Explore the site or sign up to access more features."
+msgstr "To jest strona główna. Zwiedzaj stronę lub zarejestruj się, aby uzyskać dostęp do większej liczby funkcji."
 
-#: templates/users/account_activation_sent.html:4
-#: templates/users/account_activation_sent.html:8
+#: templates/users/account_activation_sent.html:4 templates/users/account_activation_sent.html:8
 msgid "Check your email"
 msgstr "Sprawdź swój e-mail"
 
 #: templates/users/account_activation_sent.html:9
-msgid ""
-"We have sent an email to your registered email address with an activation "
-"link. Please click the link to activate your account."
+msgid "We have sent an email to your registered email address with an activation link. Please click the link to activate your account."
 msgstr "Wysłaliśmy e-mail na Twój zarejestrowany adres e-mail z linkiem aktywacyjnym. Kliknij link, aby aktywować swoje konto."
 
 #: templates/users/account_activation_sent.html:10
@@ -93,8 +79,7 @@ msgstr "Nie masz konta?"
 msgid "Register here."
 msgstr "Zarejestruj się tutaj."
 
-#: templates/users/register.html:4 templates/users/register.html:74
-#: templates/users/register.html:122
+#: templates/users/register.html:4 templates/users/register.html:74 templates/users/register.html:122
 msgid "Register"
 msgstr "Zarejestruj się"
 
@@ -127,14 +112,10 @@ msgid "User List"
 msgstr "Lista Użytkowników"
 
 #: templates/users/users_list.html:14
-#, fuzzy
-#| msgid "Username:"
 msgid "Username"
 msgstr "Nazwa użytkownika"
 
 #: templates/users/users_list.html:15
-#, fuzzy
-#| msgid "Email:"
 msgid "Email"
 msgstr "E-mail"
 
@@ -190,7 +171,7 @@ msgstr "Dodaj Nowy Film"
 msgid "Watch"
 msgstr "Obejrzyj"
 
-#: templates/videos/videos_list.html:13
+#: templates/videos/videos_list.html:13 templates/blog/edit_post.html:5
 msgid "Edit"
 msgstr "Edytuj"
 
@@ -202,6 +183,23 @@ msgstr "Usuń"
 msgid "No videos yet."
 msgstr "Brak filmów."
 
+#: templates/blog/edit_post.html:9
+msgid "Title"
+msgstr "Tytuł"
+
+#: templates/blog/edit_post.html:14
+msgid "Content"
+msgstr "Treść"
+
+#: templates/blog/edit_post.html:22
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: templates/blog/edit_post.html:23
+msgid "Update"
+msgstr "Aktualizuj"
+
+# Global messages
 msgid "You have successfully logged out."
 msgstr "Zostałeś pomyślnie wylogowany."
 

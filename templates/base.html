@@ -9,62 +9,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% trans "Tosia" %}{% endblock %}</title>
     <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="logo">
-                <a href="{% url 'main:home' %}">
-                    <img src="{% static 'logo.png' %}" alt="Tosia Logo" class="logo-image">
-                </a>
-            </div>
-            <div class="nav">
-                {% if user.is_authenticated %}
-                    <div class="welcome-message">{% trans "Welcome" %}, {{ user.username }}!</div>
-                {% endif %}
-                <a href="{% url 'main:home' %}">{% trans "Home" %}</a>
-                {% if has_public_videos %}
-                    <a href="{% url 'videos:videos_list' %}">{% trans "Videos" %}</a>
-                {% endif %}
-                {% if has_public_posts or user.is_staff %}
-                    <a href="{% url 'blog:blog_list' %}">{% trans "Blog" %}</a>
-                {% endif %}
-                {% if user.is_authenticated %}
-                    <a href="{% url 'users:users_list' %}">{% trans "Users" %}</a>
-                    <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="nav-button">{% trans "Logout" %}</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'users:login' %}">{% trans "Login" %}</a>
-                {% endif %}
 
-                <!-- Language dropdown -->
-                <form method="post" action="{% url 'set_language' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                    <select name="language" onchange="this.form.submit();" style="padding: 4px; border-radius: 4px;">
-                        <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-                        <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>Polski</option>
-                    </select>
-                </form>
-            </div>
-        </div>
+<div class="header">
+  <div class="header-content">
+
+    <div class="logo">
+      <a href="{% url 'main:home' %}">
+        <img src="{% static 'logo.png' %}" alt="Tosia Logo" class="logo-image">
+      </a>
     </div>
 
-    <div class="main-container">
-        <div class="content">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            {% block content %}{% endblock %}
-        </div>
+    <div class="header-right">
+      {% if user.is_authenticated %}
+      <div class="welcome-message">
+        {% trans "Hello" %} {{ user.username }}
+      </div>
+      {% endif %}
+
+      <div class="nav">
+        <a href="{% url 'main:home' %}">{% trans "Home" %}</a>
+
+        {% if has_public_videos %}
+          <a href="{% url 'videos:videos_list' %}">{% trans "Videos" %}</a>
+        {% endif %}
+
+        {% if has_public_posts or user.is_staff %}
+          <a href="{% url 'blog:blog_list' %}">{% trans "Blog" %}</a>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+          <a href="{% url 'users:users_list' %}">{% trans "Users" %}</a>
+          <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-button">{% trans "Logout" %}</button>
+          </form>
+        {% else %}
+          <a href="{% url 'users:login' %}">{% trans "Login" %}</a>
+        {% endif %}
+
+        <form method="post" action="{% url 'set_language' %}" style="display:inline;">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ request.get_full_path }}">
+          <select name="language" onchange="this.form.submit();" style="padding: 4px; border-radius: 4px;">
+            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+            <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>Polski</option>
+          </select>
+        </form>
+      </div>
     </div>
+
+  </div>
+</div>
+
+<div class="main-container">
+  <div class="content">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
 </body>
 </html>
