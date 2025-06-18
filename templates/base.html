@@ -5,11 +5,12 @@
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% trans "Tosia" %}{% endblock %}</title>
-    <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% trans "Tosia" %}{% endblock %}</title>
+  <link rel="icon" href="{% static 'favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
@@ -28,7 +29,7 @@
     {% endif %}
 
     <div class="header-right">
-      <div class="nav">
+      <div class="nav flex items-center gap-2">
         <a href="{% url 'main:home' %}">{% trans "Home" %}</a>
 
         {% if has_public_videos %}
@@ -51,6 +52,7 @@
           <a href="{% url 'users:login' %}">{% trans "Login" %}</a>
         {% endif %}
 
+        <!-- Language Switch -->
         <form method="post" action="{% url 'set_language' %}" style="display:inline;">
           {% csrf_token %}
           <input name="next" type="hidden" value="{{ request.get_full_path }}">
@@ -59,6 +61,17 @@
             <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>EN</option>
           </select>
         </form>
+
+        <!-- Theme Switcher (compact dropdown, fixed form nesting) -->
+        <form onsubmit="return false;" class="inline">
+          <select id="theme-switcher" class="nav-button language-select" onchange="setTheme(this.value);">
+            <option value="light">☀️ Light</option>
+            <option value="dark">🌙 Dark</option>
+            <option value="cupcake">🧁 Cupcake</option>
+            <option value="dracula">🧛‍♂️ Dracula</option>
+          </select>
+        </form>
+
       </div>
     </div>
   </div>
@@ -77,6 +90,24 @@
     {% block content %}{% endblock %}
   </div>
 </div>
+
+<!-- Theme Persistence Script -->
+<script>
+  function setTheme(theme) {
+    if (!theme) return;
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    const select = document.getElementById("theme-switcher");
+    if (select && select.value !== theme) {
+      select.value = theme;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+  });
+</script>
 
 </body>
 </html>

@@ -1,86 +1,31 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %}{% trans "Create Blog Post" %}{% endblock %}
+
 {% block content %}
-<div class="add-post-container">
-    <h1 class="add-post-title">{% trans "Write New Blog Post" %}</h1>
-    
-    <form method="post" class="add-post-form">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="title">{% trans "Title" %}</label>
-            <input type="text" id="title" name="title" required class="form-control">
-        </div>
-        
-        <div class="form-group">
-            <label for="content">{% trans "Content" %}</label>
-            <textarea id="content" name="content" required class="form-control" rows="10"></textarea>
-        </div>
-        
-        <div class="form-actions">
-            <button type="submit" class="btn btn-primary">{% trans "Publish Post" %}</button>
-            <a href="{% url 'blog:blog_list' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
-        </div>
+<div class="news-container">
+  <div class="news-box">
+    <h2 class="section-title">{% trans "Create Blog Post" %}</h2>
+
+    <form method="post" class="form-standard">
+      {% csrf_token %}
+
+      <div class="form-field">
+        <label for="title">{% trans "Title" %}</label>
+        <input type="text" id="title" name="title" required class="input-large">
+      </div>
+
+      <div class="form-field">
+        <label for="content">{% trans "Content" %}</label>
+        <textarea id="content" name="content" required class="input-large" rows="10"></textarea>
+      </div>
+
+      <div class="form-buttons-row">
+        <a href="{% url 'blog:blog_list' %}" class="button button-cancel">{% trans "Cancel" %}</a>
+        <button type="submit" class="button button-update">{% trans "Publish" %}</button>
+      </div>
     </form>
+  </div>
 </div>
-
-<style>
-    .add-post-container {
-        max-width: 800px;
-        margin: 40px auto;
-        padding: 20px;
-    }
-
-    .add-post-title {
-        color: var(--primary-color);
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 2em;
-    }
-
-    .add-post-form {
-        background: rgba(255, 255, 255, 0.9);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: var(--text-color);
-        font-weight: 500;
-    }
-
-    .form-control {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
-        font-size: 1em;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 2px rgba(255, 158, 181, 0.2);
-    }
-
-    .form-actions {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin-top: 30px;
-    }
-
-    .btn-secondary {
-        background-color: #f0f0f0;
-        color: var(--text-color);
-    }
-</style>
-{% endblock %} 
+{% endblock %}

@@ -473,6 +473,21 @@ body::before {
   box-shadow: 0 0 0 3px rgba(168, 216, 234, 0.3);
 }
 
+.form-standard {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 form p {
   display: flex;
   flex-direction: column;
@@ -506,11 +521,17 @@ form label {
   width: 100%;
   max-width: 700px;
   font-size: 1.1em;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
+  font-family: inherit;
+}
+.input-large:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(255, 158, 181, 0.2);
+  outline: none;
 }
 
 @media (max-width: 500px) {

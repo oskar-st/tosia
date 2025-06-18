@@ -171,6 +171,12 @@ msgstr "Dodaj Nowy Film"
 msgid "Watch"
 msgstr "Obejrzyj"
 
+msgid "Create Blog Post"
+msgstr "Napisz wpis na bloga"
+
+msgid "Publish"
+msgstr "Publikuj"
+
 #: templates/videos/videos_list.html:13 templates/blog/edit_post.html:5
 msgid "Edit"
 msgstr "Edytuj"
