@@ -1,66 +1,44 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% translate "Register" %}{% endblock %}
+{% block title %}{% trans "Register" %}{% endblock %}
 
 {% block content %}
+<div class="login-container">
+  <div class="login-box">
+    <h2>{% trans "Register" %}</h2>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
 
-<div class="register-container">
-    <div class="register-box">
-        <h2>{% translate "Register" %}</h2>
-        <form method="post">
-            {% csrf_token %}
-            <p>
-                <label for="id_username">{% translate "Username:" %}</label>
-                {{ form.username }}
-                {% if form.username.help_text %}
-                    <span class="helptext">{{ form.username.help_text }}</span>
-                {% endif %}
-                {% for error in form.username.errors %}
-                    <ul class="errorlist"><li>{{ error }}</li></ul>
-                {% endfor %}
-            </p>
+      <p>
+        {{ form.username.label_tag }}
+        {{ form.username }}
+        {{ form.username.errors }}
+      </p>
+      <p>
+        {{ form.email.label_tag }}
+        {{ form.email }}
+        {{ form.email.errors }}
+      </p>
+      <p>
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+        {{ form.password1.errors }}
+      </p>
+      <p>
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+        {{ form.password2.errors }}
+      </p>
 
-            <p>
-                <label for="id_email">{% translate "Email:" %}</label>
-                {{ form.email }}
-                {% if form.email.help_text %}
-                    <span class="helptext">{{ form.email.help_text }}</span>
-                {% endif %}
-                {% for error in form.email.errors %}
-                    <ul class="errorlist"><li>{{ error }}</li></ul>
-                {% endfor %}
-            </p>
+      <button type="submit">{% trans "Register" %}</button>
+    </form>
 
-            <p>
-                <label for="id_password1">{% translate "Password:" %}</label>
-                {{ form.password1 }}
-                {% if form.password1.help_text %}
-                    <span class="helptext">{{ form.password1.help_text }}</span>
-                {% endif %}
-                {% for error in form.password1.errors %}
-                    <ul class="errorlist"><li>{{ error }}</li></ul>
-                {% endfor %}
-            </p>
-
-            <p>
-                <label for="id_password2">{% translate "Password confirmation:" %}</label>
-                {{ form.password2 }}
-                {% for error in form.password2.errors %}
-                    <ul class="errorlist"><li>{{ error }}</li></ul>
-                {% endfor %}
-            </p>
-
-            {% if form.non_field_errors %}
-                <ul class="errorlist">
-                    {% for error in form.non_field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            <button type="submit">{% translate "Register" %}</button>
-        </form>
-        <p>{% translate "Already have an account?" %} <a href="{% url 'users:login' %}">{% translate "Login here." %}</a></p>
-    </div>
+    <p style="margin-top: 10px;">
+      {% trans "Already have an account?" %}
+      <a href="{% url 'users:login' %}">{% trans "Login here." %}</a>
+    </p>
+  </div>
 </div>
 {% endblock %}
