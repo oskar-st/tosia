@@ -7,8 +7,6 @@ from django.utils.translation import gettext_lazy as _
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    password = forms.CharField(label="Password", widget=forms.PasswordInput, min_length=6, max_length=20)
-    password2 = forms.CharField(label="Potwierdź hasło", widget=forms.PasswordInput)
 
     class Meta:
         model = get_user_model()
@@ -21,11 +19,11 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password1'].label = _('Password:')
         self.fields['password2'].label = _('Confirm password:')
         
-        # Update help text
+        # Help text
         self.fields['username'].help_text = _('Username must be between 6 and 20 characters.')
         self.fields['password1'].help_text = _('Password must be between 6 and 20 characters.')
         
-        # Update error messages
+        # Error messages
         self.fields['username'].error_messages = {
             'required': _('Username is required.'),
             'min_length': _('Username must be at least 6 characters.'),
@@ -39,7 +37,6 @@ class CustomUserCreationForm(UserCreationForm):
         }
         self.fields['password2'].error_messages = {
             'required': _('Password confirmation is required.'),
-            'password_mismatch': _('The two password fields didn\'t match.'),
         }
 
     def clean_username(self):
@@ -58,31 +55,19 @@ class CustomUserCreationForm(UserCreationForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get('password1')
+        password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
-        
-        if password and password2 and password != password2:
+
+        if password1 and password2 and password1 != password2:
             raise forms.ValidationError(_('The two password fields didn\'t match.'))
-        
-        return cleaned_data
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.set_password(self.cleaned_data["password"])
-        if commit:
-            user.save()
-        return user
-
-    def clean(self):
-        cleaned_data = super().clean()
         print('Form data after super().clean():', cleaned_data)
         print('Form errors after super().clean():', self.errors)
         return cleaned_data
 
-    # Removed debugging clean method temporarily
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     print('Form data:', cleaned_data)
-    #     print('Password:', cleaned_data.get('password'))
-    #     print('Password2:', cleaned_data.get('password2'))
-    #     return cleaned_data 
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        # user.set_password is already handled by UserCreationForm
+        if commit:
+            user.save()
+        return user
