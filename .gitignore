@@ -46,3 +46,4 @@ static/rest_framework/
 # Secrets
 .env
 bin/tailwindcss
+
