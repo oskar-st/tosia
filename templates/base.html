@@ -23,7 +23,7 @@
 
     {% if user.is_authenticated %}
     <div class="welcome-message">
-      {% trans "Hello" %} {{ user.username }}
+      {% trans "Hi" %} {{ user.username }}
     </div>
     {% endif %}
 
@@ -54,9 +54,9 @@
         <form method="post" action="{% url 'set_language' %}" style="display:inline;">
           {% csrf_token %}
           <input name="next" type="hidden" value="{{ request.get_full_path }}">
-          <select name="language" onchange="this.form.submit();" style="padding: 4px; border-radius: 4px;">
-            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
-            <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>Polski</option>
+          <select name="language" class="nav-button language-select" onchange="this.form.submit();">
+            <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>PL</option>
+            <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>EN</option>
           </select>
         </form>
       </div>

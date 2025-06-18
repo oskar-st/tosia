@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@400;700&display=swap');
 
-
 :root {
   --primary-color: #ff9eb5;
   --secondary-color: #b4a7d6;
@@ -80,13 +79,13 @@ body::before {
   text-decoration: none;
   color: var(--text-color);
   font-weight: 500;
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 8px;
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.8);
   border: 1px solid var(--border-color);
   cursor: pointer;
-  font-size: 1em;
+  font-size: 0.8em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: inline-block;
   line-height: 1.5;
@@ -127,8 +126,8 @@ body::before {
 }
 
 .content {
-  padding: 0px;
-  margin-top:0px;
+  padding: 0;
+  margin-top: 0;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -142,12 +141,12 @@ body::before {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 25px;
-}
-.blog-container h1 {
-  margin-bottom: 10px; /* reduce space below heading */
+  gap: 5px;
 }
 
+.blog-container h1 {
+  margin-bottom: 0px;
+}
 
 .blog-item,
 .news-box {
@@ -174,7 +173,7 @@ body::before {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .button {
@@ -200,7 +199,6 @@ body::before {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 
 .button.delete {
   background-color: var(--error-color);
@@ -258,14 +256,12 @@ body::before {
   background-color: var(--success-color);
 }
 
-
 .header-right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 4px;
 }
-
 
 .welcome-message {
   font-size: 1rem;
@@ -325,7 +321,7 @@ body::before {
   background: white;
   border-radius: 8px;
   padding: 10px 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   gap: 20px;
 }
 
@@ -371,6 +367,7 @@ body::before {
   align-items: center;
   flex-shrink: 0;
 }
+
 .welcome-message-global {
   font-size: 0.8rem;
   font-weight: 500;
@@ -383,64 +380,138 @@ body::before {
   box-sizing: border-box;
 }
 
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 90px);
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-    .login-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: calc(100vh - 90px); /* Adjust based on header height */
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    .login-box {
-        background-color: #fff;
-        padding: 30px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 400px; /* Keep this for login form, it's a good size */
-        text-align: center;
-    }
-    .login-box h2 {
-        margin-bottom: 20px;
-        color: #333;
-    }
-    .login-box p {
-        text-align: left;
-        margin-bottom: 15px;
-    }
-    .login-box input[type="text"],
-    .login-box input[type="email"],
-    .login-box input[type="password"] {
-        width: calc(100% - 20px);
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-    .login-box button[type="submit"] {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 1em;
-        margin-top: 10px;
-    }
-    .login-box button[type="submit"]:hover {
-        background-color: #0056b3;
-    }
-    .login-box .errorlist li {
-        color: red;
-        text-align: left;
-        list-style: none;
-        padding-left: 0;
-    }
-    .login-box ul.errorlist {
-        padding-left: 0;
-        margin-bottom: 10px;
-    }
+.login-box {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.login-box p {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.login-box input[type="text"],
+.login-box input[type="email"],
+.login-box input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.login-box button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  margin-top: 10px;
+}
+
+.login-box button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.login-box .errorlist li {
+  color: red;
+  text-align: left;
+  list-style: none;
+  padding-left: 0;
+}
+
+.login-box ul.errorlist {
+  padding-left: 0;
+  margin-bottom: 10px;
+}
+
+/* NEW: Language Dropdown Style */
+.language-select {
+  padding: 6px 12px;
+  font-size: 0.8em;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+  height: 30px;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.language-select:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(168, 216, 234, 0.3);
+}
+
+form p {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+form label {
+  font-weight: 500;
+  margin-bottom: 2px;
+} 
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.form-error {
+  color: var(--error-color);
+  font-size: 0.9em;
+}
+
+.input-large {
+  width: 100%;
+  max-width: 700px;
+  font-size: 1.1em;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
 
 @media (max-width: 500px) {
   .welcome-message-global {

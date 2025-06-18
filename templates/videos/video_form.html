@@ -1,15 +1,51 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}
-    {% if form.instance.pk %}Edit Video{% else %}Add Video{% endif %}
+  {% if form.instance.pk %}{% trans "Edit Video" %}{% else %}{% trans "Add Video" %}{% endif %}
 {% endblock %}
 
 {% block content %}
-    <h1>{% if form.instance.pk %}Edit Video{% else %}Add New Video{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-        <a href="{% url 'videos:videos_list' %}">Cancel</a>
+<div class="news-container">
+  <div class="news-box">
+    <h2>
+      {% if form.instance.pk %}
+        {% trans "Edit Video" %}
+      {% else %}
+        {% trans "Add New Video" %}
+      {% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="form-field">
+        <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+        {% for error in form.title.errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="form-field">
+        <label for="{{ form.youtube_url.id_for_label }}">{{ form.youtube_url.label }}</label>
+        {{ form.youtube_url }}
+        {% for error in form.youtube_url.errors %}
+          <div class="form-error">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="form-buttons-row">
+        <a href="{% url 'videos:videos_list' %}" class="button button-cancel">{% trans "Cancel" %}</a>
+        <button type="submit" class="button button-update">
+          {% if form.instance.pk %}
+            {% trans "Update" %}
+          {% else %}
+            {% trans "Add" %}
+          {% endif %}
+        </button>
+      </div>
     </form>
-{% endblock %} 
+  </div>
+</div>
+{% endblock %}

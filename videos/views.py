@@ -11,9 +11,14 @@ class VideoForm(forms.ModelForm):
         model = Video
         fields = ['title', 'youtube_url']
         widgets = {
-            'youtube_url': forms.URLInput(attrs={'placeholder': 'https://www.youtube.com/watch?v=VIDEO_ID'})
+            'title': forms.TextInput(attrs={
+                'class': 'input-large'
+            }),
+            'youtube_url': forms.URLInput(attrs={
+                'placeholder': 'https://www.youtube.com/watch?v=VIDEO_ID',
+                'class': 'input-large'
+            })
         }
-
     def clean_youtube_url(self):
         url = self.cleaned_data['youtube_url']
         # Convert various YouTube URL formats to standard format
