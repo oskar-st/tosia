@@ -47,3 +47,4 @@ static/rest_framework/
 .env
 bin/tailwindcss
 
+node_modules/
