@@ -1,23 +1,12 @@
 {
-  "name": "django",
+  "name": "tosia-style-system",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "SCSS build setup for Tosia project",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "sass --watch static/scss/main.scss:static/css/style.css",
+    "build": "sass static/scss/main.scss static/css/style.css"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oskar-st/tosia.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/oskar-st/tosia/issues"
-  },
-  "homepage": "https://github.com/oskar-st/tosia#readme",
-  "description": "",
   "devDependencies": {
-    "daisyui": "^5.0.43"
+    "sass": "^1.69.0"
   }
 }

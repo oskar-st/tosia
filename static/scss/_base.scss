@@ -1,0 +1,60 @@
+@use 'variables' as *;
+
+body {
+  font-family: $font-body;
+  margin: 0;
+  padding: 0;
+  color: var(--text-color);
+  line-height: 1.6;
+  background-color: var(--light-bg);
+  background-image: url('/static/repeatable.png');
+  background-repeat: repeat;
+  background-attachment: fixed;
+  background-size: auto;
+  position: relative;
+}
+
+// Themes with stretched backgrounds
+[data-theme='dark'] body,
+[data-theme='dracula'] body,
+[data-theme='cupcake'] body {
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+// Theme-specific background images/colors
+[data-theme='dark'] body {
+  background-color: var(--dark-bg);
+  background-image: url('/static/darkbg.jpg');
+}
+
+[data-theme='dracula'] body {
+  background-color: var(--dark-bg);
+  background-image: url('/static/draculabg.jpg');
+}
+
+[data-theme='cupcake'] body {
+  background-color: var(--light-bg);
+  background-image: url('/static/cakebg.png');
+}
+
+// White overlay for light theme only
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  z-index: -1;
+}
+
+// Disable overlay for dark themes
+[data-theme='dark'] body::before,
+[data-theme='dracula'] body::before,
+[data-theme='cupcake'] body::before {
+  display: none;
+}

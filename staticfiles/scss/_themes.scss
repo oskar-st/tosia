@@ -1,0 +1,42 @@
+@use 'variables' as *;
+:root {
+  --primary-color: #{variables.$primary-color};
+  --secondary-color: #{variables.$secondary-color};
+  --accent-color: #{variables.$accent-color};
+  --text-color: #{variables.$text-color};
+  --light-bg: #{variables.$light-bg};
+  --dark-bg: #{variables.$dark-bg};
+  --border-color: #{variables.$border-color};
+  --success-color: #{variables.$success-color};
+  --error-color: #{variables.$error-color};
+}
+
+[data-theme='dark'] {
+  --primary-color: #ff80a1;
+  --secondary-color: #9986d3;
+  --accent-color: #84cce0;
+  --text-color: #eeeeee;
+  --light-bg: #1b1b1b;
+  --dark-bg: #111;
+  --border-color: #333;
+}
+
+[data-theme='cupcake'] {
+  --primary-color: #f472b6;    // pink
+  --secondary-color: #fcd34d;  // yellow
+  --accent-color: #a5f3fc;     // sky
+  --text-color: #4b0082;
+  --light-bg: #fff1f5;
+  --dark-bg: #ffe4e6;
+  --border-color: #fbcfe8;
+}
+
+[data-theme='dracula'] {
+  --primary-color: #bd93f9;
+  --secondary-color: #ff79c6;
+  --accent-color: #8be9fd;
+  --text-color: #f8f8f2;
+  --light-bg: #282a36;
+  --dark-bg: #1e1f29;
+  --border-color: #44475a;
+}

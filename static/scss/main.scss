@@ -1,0 +1,52 @@
+@use 'variables' as *;
+@use 'themes';
+@use 'base';
+@use 'layout';
+@use 'components';
+
+// THEME CSS VARIABLES
+:root {
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --accent-color: #{$accent-color};
+  --text-color: #{$text-color};
+  --light-bg: #{$light-bg};
+  --dark-bg: #{$dark-bg};
+  --border-color: #{$border-color};
+  --success-color: #{$success-color};
+  --error-color: #{$error-color};
+  --card-bg: var(--light-bg);
+}
+
+[data-theme='dark'] {
+  --primary-color: #ff80a1;
+  --secondary-color: #9986d3;
+  --accent-color: #84cce0;
+  --text-color: #eeeeee;
+  --light-bg: #1b1b1b;
+  --dark-bg: #111;
+  --border-color: #333;
+  --card-bg: var(--dark-bg);
+}
+
+[data-theme='cupcake'] {
+  --primary-color: #f472b6;
+  --secondary-color: #fcd34d;
+  --accent-color: #a5f3fc;
+  --text-color: #4b0082;
+  --light-bg: #fff1f5;
+  --dark-bg: #ffe4e6;
+  --border-color: #fbcfe8;
+  --card-bg: #fff0f6;
+}
+
+[data-theme='dracula'] {
+  --primary-color: #bd93f9;
+  --secondary-color: #ff79c6;
+  --accent-color: #8be9fd;
+  --text-color: #f8f8f2;
+  --light-bg: #282a36;
+  --dark-bg: #1e1f29;
+  --border-color: #44475a;
+  --card-bg: #2c2c3c;
+}

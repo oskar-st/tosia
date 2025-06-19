@@ -41,6 +41,8 @@ class CustomUserCreationForm(UserCreationForm):
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
+        if not username:
+            raise forms.ValidationError(_('Username is required.'))
         if len(username) < 6:
             raise forms.ValidationError(_('Username must be at least 6 characters.'))
         if len(username) > 20:
