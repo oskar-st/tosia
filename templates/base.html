@@ -5,96 +5,93 @@
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{% block title %}{% trans "Tosia" %}{% endblock %}</title>
-  <link rel="icon" href="{% static 'favico.ico' %}" type="image/x-icon">
-
-  <!-- ✅ Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
-  <!-- ✅ Main CSS -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" href="{% static 'favico.ico' %}" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-
-<div class="header">
+  <header class="header">
   <div class="header-content">
     <div class="logo">
       <a href="{% url 'main:home' %}">
-        <img src="{% static 'logo.png' %}" alt="Tosia Logo" class="logo-image">
+          <img src="{% static 'logo.png' %}" alt="Tosia Logo" />
       </a>
     </div>
 
+      <div class="header-right">
     {% if user.is_authenticated %}
-    <div class="welcome-message">
-      {% trans "Hi" %} {{ user.username }}
+          <div class="welcome-message">Hi {{ user.username }}</div>
+        {% endif %}
+        <nav class="nav-container">
+          <span class="search-wrap" style="position: relative; display: inline-block;">
+            <button type="button" class="btn search-btn" id="search-btn" title="Search">🔍</button>
+            <div class="search-dropdown" id="search-dropdown" style="display: none;">
+              <form id="search-form" method="get" action="{% url 'main:search' %}">
+                <input type="text" name="q" class="search-input" placeholder="{% trans 'Search...' %}" autocomplete="off" />
+                <button type="submit" class="btn search-submit">Go</button>
+              </form>
+              <div id="search-results"></div>
     </div>
-    {% endif %}
-
-    <div class="header-right">
-      <div class="nav flex items-center gap-2">
-        <a href="{% url 'main:home' %}">{% trans "Home" %}</a>
+          </span>
+          <a href="{% url 'main:home' %}" class="btn">{% trans "Home" %}</a>
 
         {% if has_public_videos %}
-          <a href="{% url 'videos:videos_list' %}">{% trans "Videos" %}</a>
+          <a href="{% url 'videos:videos_list' %}" class="btn">{% trans "Videos" %}</a>
         {% endif %}
 
         {% if has_public_posts or user.is_staff %}
-          <a href="{% url 'blog:blog_list' %}">{% trans "Blog" %}</a>
+          <a href="{% url 'blog:blog_list' %}" class="btn">{% trans "Blog" %}</a>
         {% endif %}
 
         {% if user.is_authenticated %}
           {% if user.is_staff %}
-            <a href="{% url 'users:users_list' %}">{% trans "Users" %}</a>
+            <a href="{% url 'users:users_list' %}" class="btn">{% trans "Users" %}</a>
           {% endif %}
-          <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
+            <form action="{% url 'users:logout' %}" method="post" class="inline-form">
             {% csrf_token %}
-            <button type="submit" class="nav-button">{% trans "Logout" %}</button>
+              <button type="submit" class="btn">{% trans "Logout" %}</button>
           </form>
         {% else %}
-          <a href="{% url 'users:login' %}">{% trans "Login" %}</a>
+          <a href="{% url 'users:login' %}" class="btn">{% trans "Login" %}</a>
         {% endif %}
 
-        <!-- Language Switch -->
-        <form method="post" action="{% url 'set_language' %}" style="display:inline;">
+          <div class="switchers">
+            <form method="post" action="{% url 'set_language' %}" class="inline-form">
           {% csrf_token %}
-          <input name="next" type="hidden" value="{{ request.get_full_path }}">
-          <select name="language" class="nav-button language-select" onchange="this.form.submit();">
+              <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+              <select name="language" class="btn language-select" onchange="this.form.submit();">
             <option value="pl" {% if LANGUAGE_CODE == 'pl' %}selected{% endif %}>PL</option>
             <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>EN</option>
           </select>
         </form>
-
-        <!-- Theme Switcher -->
-        <form onsubmit="return false;" class="inline">
-          <select id="theme-switcher" class="nav-button language-select" onchange="setTheme(this.value);">
-            <option value="light">☀️ Light</option>
-            <option value="dark">🌙 Dark</option>
-            <option value="cupcake">🧁 Cupcake</option>
-            <option value="dracula">🧛‍♂️ Dracula</option>
+            <form onsubmit="return false;" class="inline-form">
+              <select id="theme-switcher" class="btn language-select" onchange="setTheme(this.value);">
+                <option value="light">☀️</option>
+                <option value="dark">🌙</option>
+                <option value="cupcake">🧁</option>
+                <option value="dracula">🧛‍♂️</option>
           </select>
         </form>
+          </div>
+        </nav>
       </div>
     </div>
-  </div>
-</div>
+  </header>
 
-<div class="main-container">
+  <main class="main-container">
   <div class="content">
     {% if messages %}
       {% for message in messages %}
-        <div class="message {{ message.tags }}">
-          {{ message }}
-        </div>
+      <div class="message {{ message.tags }}">{{ message }}</div>
       {% endfor %}
     {% endif %}
-
     {% block content %}{% endblock %}
   </div>
-</div>
+  </main>
 
-<!-- Theme Persistence Script -->
 <script>
   function setTheme(theme) {
     if (!theme) return;
@@ -105,12 +102,83 @@
       select.value = theme;
     }
   }
-
   document.addEventListener("DOMContentLoaded", function () {
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
+
+      // Search dropdown logic
+      const searchBtn = document.getElementById('search-btn');
+      const searchDropdown = document.getElementById('search-dropdown');
+      const searchForm = document.getElementById('search-form');
+      document.addEventListener('click', function(e) {
+        if (searchBtn && searchDropdown) {
+          if (searchBtn.contains(e.target)) {
+            searchDropdown.style.display = searchDropdown.style.display === 'block' ? 'none' : 'block';
+            if (searchDropdown.style.display === 'block') {
+              searchDropdown.querySelector('input').focus();
+            }
+          } else if (!searchDropdown.contains(e.target)) {
+            searchDropdown.style.display = 'none';
+          }
+        }
+      });
+      if (searchForm) {
+        searchForm.addEventListener('submit', function() {
+          // Close the dropdown on submit, let the form submit normally
+          if (searchDropdown) searchDropdown.style.display = 'none';
+        });
+      }
+
+      // Scroll-to-top arrow logic
+      const topBtnContainer = document.getElementById('scroll-to-top-container');
+      if (topBtnContainer) {
+          function toggleScrollBtn() {
+            if (window.scrollY > 1) {
+              topBtnContainer.classList.remove('is-hidden');
+            } else {
+              topBtnContainer.classList.add('is-hidden');
+            }
+          }
+
+          window.addEventListener('scroll', toggleScrollBtn);
+          toggleScrollBtn();
+
+          const topBtn = document.getElementById('scroll-to-top');
+          if (topBtn) {
+            topBtn.addEventListener('click', function(e) {
+              e.preventDefault();
+              window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+          }
+      }
   });
 </script>
+{% block page_script %}{% endblock %}
+<script>
+  // This script runs after a short delay to ensure the DOM is ready.
+  setTimeout(function() {
+    const topBtnContainer = document.getElementById('scroll-to-top-container');
+    if (topBtnContainer) {
+        function toggleScrollBtn() {
+          if (window.scrollY > 1) {
+            topBtnContainer.classList.remove('is-hidden');
+          } else {
+            topBtnContainer.classList.add('is-hidden');
+          }
+        }
 
+        window.addEventListener('scroll', toggleScrollBtn);
+        toggleScrollBtn();
+
+        const topBtn = document.getElementById('scroll-to-top');
+        if (topBtn) {
+          topBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+          });
+        }
+    }
+  }, 100);
+</script>
 </body>
 </html>

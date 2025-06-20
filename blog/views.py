@@ -4,15 +4,17 @@ from django.contrib import messages
 from .models import BlogPost
 from django.utils.translation import gettext_lazy as _
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import Http404, JsonResponse
 
 # Create your views here.
 
 def blog_list(request):
+    highlight = request.GET.get('highlight')
     if request.user.is_staff:
         posts = BlogPost.objects.all()
     else:
         posts = BlogPost.objects.filter(is_public=True)
-    return render(request, 'blog/blog_list.html', {'posts': posts})
+    return render(request, 'blog/blog_list.html', {'posts': posts, 'highlight': highlight})
 
 @login_required
 def add_post(request):
@@ -69,4 +71,14 @@ def toggle_public(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
     post.is_public = not post.is_public
     post.save()
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'status': 'public' if post.is_public else 'private'})
+
     return redirect('blog:blog_list')
+
+def blog_detail(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id)
+    if not post.is_public and not request.user.is_staff:
+        raise Http404()
+    return render(request, 'blog/blog_detail.html', {'post': post})

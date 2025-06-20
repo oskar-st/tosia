@@ -1,0 +1,13 @@
+{% load i18n %}
+{% if results %}
+  <ul class="search-results-list">
+    {% for result in results %}
+      <li>
+        <span class="result-type">{{ result.type }}</span>:
+        <a href="{{ result.url }}">{{ result.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>{% trans "No results found." %}</p>
+{% endif %} 

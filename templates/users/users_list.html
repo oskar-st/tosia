@@ -59,6 +59,40 @@
             </tbody>
         </table>
 
+        <!-- Mobile-friendly user cards -->
+        <div class="user-list-cards">
+        {% for user_obj in users %}
+          <div class="user-card">
+            <div><strong>{% translate "Username" %}:</strong> {{ user_obj.username }}</div>
+            <div><strong>{% translate "Email" %}:</strong> {{ user_obj.email }}</div>
+            <div><strong>{% translate "Admin" %}:</strong> {% if user_obj.is_admin %}{% translate "Yes" %}{% else %}{% translate "No" %}{% endif %}</div>
+            <div class="actions">
+              {% if user_obj.id != request.user.id %}
+                {% if user_obj.is_admin %}
+                  <form action="{% url 'users:remove_admin_role' user_obj.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="button-danger">{% translate "Remove Admin" %}</button>
+                  </form>
+                {% else %}
+                  <form action="{% url 'users:add_admin_role' user_obj.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="button-success">{% translate "Make Admin" %}</button>
+                  </form>
+                {% endif %}
+                <form action="{% url 'users:delete_user' user_obj.id %}" method="post" style="display:inline; margin-left: 10px;">
+                  {% csrf_token %}
+                  <button type="submit" class="button-danger">{% translate "Delete User" %}</button>
+                </form>
+              {% else %}
+                <em>{% translate "(You)" %}</em>
+              {% endif %}
+            </div>
+          </div>
+        {% empty %}
+          <div class="user-card">{% translate "No users found." %}</div>
+        {% endfor %}
+        </div>
+
         <h3>{% translate "Add New User" %}</h3>
         <form method="post" action="{% url 'users:add_user' %}">
             {% csrf_token %}
@@ -67,45 +101,4 @@
         </form>
     </div>
 </div>
-<style>
-    .user-list-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    .user-list-table th,
-    .user-list-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    .user-list-table th {
-        background-color: #f2f2f2;
-        font-weight: bold;
-    }
-    .button-success {
-        background-color: #28a745;
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9em;
-    }
-    .button-success:hover {
-        background-color: #218838;
-    }
-    .button-danger {
-        background-color: #dc3545;
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.9em;
-    }
-    .button-danger:hover {
-        background-color: #c82333;
-    }
-</style>
 {% endblock %} 

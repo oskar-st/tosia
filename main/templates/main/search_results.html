@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+  <div class="content">
+    <h2>{% trans "Search results for" %} "{{ query }}"</h2>
+    {% if results %}
+      <ul class="search-results-list">
+        {% for result in results %}
+          <li>
+            <span class="result-type">{{ result.type }}</span>:
+            <a href="{{ result.url }}">{{ result.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>{% trans "No results found." %}</p>
+    {% endif %}
+  </div>
+{% endblock %} 

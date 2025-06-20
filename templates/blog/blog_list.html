@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% trans "Blog" %}{% endblock %}
 
@@ -15,7 +16,7 @@
 
     <div class="blog-list">
         {% for post in posts %}
-        <div class="blog-item">
+        <div class="blog-item{% if highlight and post.id|stringformat:'s' == highlight %} highlight{% endif %}"{% if highlight and post.id|stringformat:'s' == highlight %} id="highlighted-post"{% endif %}>
             <h2>{{ post.title }}</h2>
             <p class="blog-date">{{ post.created_at|date:"F j, Y" }}</p>
             <div class="blog-content">
@@ -36,21 +37,90 @@
                     </button>
                 </form>
 
-                <form method="post" action="{% url 'blog:toggle_public' post.id %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit"
-                        class="button {% if post.is_public %}public{% else %}private{% endif %}">
-                        {% if post.is_public %}
-                            {% trans "Public" %}
-                        {% else %}
-                            {% trans "Private" %}
-                        {% endif %}
-                    </button>
-                </form>
+                <button
+                    class="button toggle-visibility-btn {% if post.is_public %}public{% else %}private{% endif %}"
+                    data-post-id="{{ post.id }}">
+                    {% if post.is_public %}
+                        {% trans "Public" %}
+                    {% else %}
+                        {% trans "Private" %}
+                    {% endif %}
+                </button>
             </div>
             {% endif %}
         </div>
         {% endfor %}
     </div>
 </div>
+<div id="scroll-to-top-container" class="scroll-arrow is-hidden">
+  <a href="#top" id="scroll-to-top" style="display:inline-block; text-decoration:none;">
+    <img src="{% static 'up.svg' %}" alt="Scroll to top" width="48" height="48" class="scroll-to-top-img"/>
+  </a>
+</div>
 {% endblock %}
+
+{% block page_script %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.toggle-visibility-btn').forEach(button => {
+    button.addEventListener('click', function () {
+      const postId = this.dataset.postId;
+      const url = `/toggle-post-visibility/${postId}/`;
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.status === 'public') {
+          this.textContent = '{% trans "Public" %}'.trim();
+          this.classList.remove('private');
+          this.classList.add('public');
+        } else {
+          this.textContent = '{% trans "Private" %}'.trim();
+          this.classList.remove('public');
+          this.classList.add('private');
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    });
+  });
+});
+</script>
+{% endblock %}
+
+{% if highlight %}
+<script>
+  function scrollToHighlightedPost() {
+    var el = document.getElementById('highlighted-post');
+    if (el) {
+      el.scrollIntoView({behavior: 'smooth', block: 'center'});
+      el.classList.add('highlight-animate');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    if (document.images.length > 0) {
+      let loaded = 0;
+      for (let img of document.images) {
+        if (img.complete) loaded++;
+        else img.addEventListener('load', () => {
+          loaded++;
+          if (loaded === document.images.length) scrollToHighlightedPost();
+        });
+      }
+      if (loaded === document.images.length) scrollToHighlightedPost();
+    } else {
+      scrollToHighlightedPost();
+    }
+  });
+</script>
+{% endif %}
