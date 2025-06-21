@@ -11,6 +11,13 @@
   <link rel="icon" href="{% static 'favico.ico' %}" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <script>
+    // Apply theme immediately to prevent flash
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
 </head>
 <body>
   <header class="header">
@@ -26,9 +33,9 @@
           <div class="welcome-message">Hi {{ user.username }}</div>
         {% endif %}
         <nav class="nav-container">
-          <span class="search-wrap" style="position: relative; display: inline-block;">
+          <span class="search-wrap">
             <button type="button" class="btn search-btn" id="search-btn" title="Search">🔍</button>
-            <div class="search-dropdown" id="search-dropdown" style="display: none;">
+            <div class="search-dropdown" id="search-dropdown">
               <form id="search-form" method="get" action="{% url 'main:search' %}">
                 <input type="text" name="q" class="search-input" placeholder="{% trans 'Search...' %}" autocomplete="off" />
                 <button type="submit" class="btn search-submit">Go</button>

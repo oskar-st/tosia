@@ -8,6 +8,7 @@
   --border-color: #e8d5db;
   --success-color: #28a745;
   --error-color: #dc3545;
+  --card-bg: #fff5f7;
 }
 
 [data-theme=dark] {
@@ -18,6 +19,7 @@
   --light-bg: #1b1b1b;
   --dark-bg: #111;
   --border-color: #333;
+  --card-bg: #2a2a2a;
 }
 
 [data-theme=cupcake] {
@@ -28,6 +30,7 @@
   --light-bg: #fff1f5;
   --dark-bg: #ffe4e6;
   --border-color: #fbcfe8;
+  --card-bg: #ff84d0;
 }
 
 [data-theme=dracula] {
@@ -38,6 +41,7 @@
   --light-bg: #282a36;
   --dark-bg: #1e1f29;
   --border-color: #44475a;
+  --card-bg: #282a36;
 }
 
 body {
@@ -170,6 +174,16 @@ body::before {
   white-space: nowrap;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 34px;
+  line-height: 1;
+  vertical-align: middle;
+  font-family: inherit;
+  margin: 0;
 }
 .nav-container a.btn:hover,
 .nav-container button.btn:hover,
@@ -183,6 +197,12 @@ body::before {
   display: inline-flex;
   align-items: center;
   margin: 0;
+}
+.nav-container form.inline-form button.btn {
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .nav-container select.language-select {
   min-width: 48px;
@@ -315,7 +335,7 @@ body::before {
 }
 
 .content {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 245, 247, 0.85);
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   min-height: 400px;
@@ -539,18 +559,26 @@ body::before {
 }
 
 .language-select {
-  padding: 6px 12px;
+  padding: 6px 16px;
   font-size: 0.8em;
   border-radius: 8px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   color: var(--text-color);
   font-family: "Poppins", sans-serif;
-  height: 30px;
+  height: 34px;
   line-height: 1.5;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+}
+
+.language-select::-ms-expand {
+  display: none;
 }
 
 .language-select:hover {
@@ -582,9 +610,11 @@ body::before {
   align-items: center;
   justify-content: space-between;
   background: var(--card-bg);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 10px 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  margin-bottom: 15px;
   gap: 20px;
 }
 
@@ -619,7 +649,8 @@ body::before {
 }
 
 .video-date {
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.7;
   font-size: 0.8rem;
   margin: 0;
 }
@@ -837,6 +868,26 @@ body::before {
     font-size: 0.85em;
   }
 }
+.search-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.search-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1001;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  min-width: 220px;
+  margin-top: 6px;
+}
+
 .search-btn {
   font-size: 1.2em;
   padding: 0 10px;
@@ -853,20 +904,6 @@ body::before {
 .search-btn:hover {
   background: var(--accent-color);
   color: var(--primary-color);
-}
-
-.search-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1001;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-  padding: 12px;
-  min-width: 220px;
-  margin-top: 6px;
 }
 
 .search-input {
@@ -897,11 +934,6 @@ body::before {
 #search-results {
   margin-top: 10px;
   font-size: 0.95em;
-}
-
-.search-wrap {
-  position: relative;
-  display: inline-block;
 }
 
 .highlight {
@@ -1006,6 +1038,19 @@ body::before {
 .is-hidden {
   /* This class is no longer needed */
   /* display: none !important; */
+}
+
+.scroll-to-top-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.login-link {
+  margin-top: 10px;
+}
+
+.delete-form {
+  margin-left: 10px;
 }
 
 :root {

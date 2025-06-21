@@ -25,11 +25,11 @@
 
             {% if user.is_staff %}
             <div class="blog-actions">
-                <form method="get" action="{% url 'blog:edit_post' post.id %}" style="display:inline;">
+                <form method="get" action="{% url 'blog:edit_post' post.id %}" class="inline-form">
                     <button type="submit" class="button">{% trans "Edit" %}</button>
                 </form>
 
-                <form method="post" action="{% url 'blog:delete_post' post.id %}" style="display:inline;">
+                <form method="post" action="{% url 'blog:delete_post' post.id %}" class="inline-form">
                     {% csrf_token %}
                     <button type="submit" class="button delete"
                         onclick="return confirm('{% trans "Are you sure you want to delete this post?" %}')">
@@ -53,7 +53,7 @@
     </div>
 </div>
 <div id="scroll-to-top-container" class="scroll-arrow is-hidden">
-  <a href="#top" id="scroll-to-top" style="display:inline-block; text-decoration:none;">
+  <a href="#top" id="scroll-to-top" class="scroll-to-top-link">
     <img src="{% static 'up.svg' %}" alt="Scroll to top" width="48" height="48" class="scroll-to-top-img"/>
   </a>
 </div>

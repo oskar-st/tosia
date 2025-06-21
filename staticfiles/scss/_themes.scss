@@ -1,4 +1,5 @@
-@use 'variables' as *;
+@use 'variables';
+
 :root {
   --primary-color: #{variables.$primary-color};
   --secondary-color: #{variables.$secondary-color};
@@ -9,6 +10,7 @@
   --border-color: #{variables.$border-color};
   --success-color: #{variables.$success-color};
   --error-color: #{variables.$error-color};
+  --card-bg: #{variables.$light-bg};
 }
 
 [data-theme='dark'] {
@@ -19,6 +21,7 @@
   --light-bg: #1b1b1b;
   --dark-bg: #111;
   --border-color: #333;
+  --card-bg: #2a2a2a;
 }
 
 [data-theme='cupcake'] {
@@ -29,6 +32,7 @@
   --light-bg: #fff1f5;
   --dark-bg: #ffe4e6;
   --border-color: #fbcfe8;
+  --card-bg: #ff84d0;
 }
 
 [data-theme='dracula'] {
@@ -39,4 +43,5 @@
   --light-bg: #282a36;
   --dark-bg: #1e1f29;
   --border-color: #44475a;
+  --card-bg: #282a36;
 }
