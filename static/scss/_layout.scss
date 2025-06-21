@@ -283,7 +283,27 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  table-layout: fixed;
 }
+
+.user-list-table th:nth-child(3),
+.user-list-table td:nth-child(3) {
+  width: 10%;
+  text-align: center;
+}
+
+.user-list-table th:nth-child(4),
+.user-list-table td:nth-child(4) {
+  width: 35%;
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
 .user-list-table th,
 .user-list-table td {
   border: 1px solid var(--border-color);

@@ -5,17 +5,21 @@
 
 {% block content %}
 <div class="blog-container">
-    <h1>{% trans "Edit" %}</h1>
-    <form method="post">
+    <h1>{% trans "Edit Post" %}</h1>
+    <form method="post" class="edit-post-form">
         {% csrf_token %}
+        <div class="form-field-title">
+            <label for="id_title">{% trans "Title" %}</label>
+            <input type="text" id="id_title" name="title" value="{{ post.title }}" class="input-large" required>
+        </div>
 
-        <input type="text" id="id_title" name="title" value="{{ post.title }}" required>
-
-        <textarea id="id_content" name="content" required>{{ post.content }}</textarea>
-
-        <div class="form-buttons-row">
-            <a href="{% url 'blog:blog_list' %}" class="button">{% trans "Cancel" %}</a>
-            <button type="submit" class="button">{% trans "Update" %}</button>
+        <div class="form-field-content">
+            <label for="id_content">{% trans "Content" %}</label>
+            <textarea id="id_content" name="content" required>{{ post.content }}</textarea>
+            <div class="form-buttons-row">
+                <a href="{% url 'blog:blog_list' %}" class="button">{% trans "Cancel" %}</a>
+                <button type="submit" class="button">{% trans "Update" %}</button>
+            </div>
         </div>
     </form>
 </div>

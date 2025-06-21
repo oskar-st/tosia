@@ -11,6 +11,7 @@
   --success-color: #{variables.$success-color};
   --error-color: #{variables.$error-color};
   --card-bg: #{variables.$light-bg};
+  --highlight-bg: #fffbe6;
 }
 
 [data-theme='dark'] {
@@ -22,6 +23,7 @@
   --dark-bg: #111;
   --border-color: #333;
   --card-bg: #2a2a2a;
+  --highlight-bg: #4d433c;
 }
 
 [data-theme='cupcake'] {
@@ -44,4 +46,5 @@
   --dark-bg: #1e1f29;
   --border-color: #44475a;
   --card-bg: #282a36;
+  --highlight-bg: #4d433c;
 }

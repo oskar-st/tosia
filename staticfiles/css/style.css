@@ -9,6 +9,7 @@
   --success-color: #28a745;
   --error-color: #dc3545;
   --card-bg: #fff5f7;
+  --highlight-bg: #fffbe6;
 }
 
 [data-theme=dark] {
@@ -20,6 +21,7 @@
   --dark-bg: #111;
   --border-color: #333;
   --card-bg: #2a2a2a;
+  --highlight-bg: #4d433c;
 }
 
 [data-theme=cupcake] {
@@ -42,6 +44,7 @@
   --dark-bg: #1e1f29;
   --border-color: #44475a;
   --card-bg: #282a36;
+  --highlight-bg: #4d433c;
 }
 
 body {
@@ -370,6 +373,25 @@ body::before {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  table-layout: fixed;
+}
+
+.user-list-table th:nth-child(3),
+.user-list-table td:nth-child(3) {
+  width: 10%;
+  text-align: center;
+}
+
+.user-list-table th:nth-child(4),
+.user-list-table td:nth-child(4) {
+  width: 35%;
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
 }
 
 .user-list-table th,
@@ -939,7 +961,7 @@ body::before {
 .highlight {
   border: 2px solid var(--primary-color) !important;
   box-shadow: 0 0 10px var(--primary-color);
-  background: #fffbe6;
+  background: var(--highlight-bg);
   transition: background 0.5s, box-shadow 0.5s;
 }
 
@@ -949,7 +971,7 @@ body::before {
 
 @keyframes highlight-fade {
   0% {
-    background: #fffbe6;
+    background: var(--highlight-bg);
     box-shadow: 0 0 16px var(--primary-color);
   }
   100% {
@@ -1051,6 +1073,46 @@ body::before {
 
 .delete-form {
   margin-left: 10px;
+}
+
+/* Edit Post Form */
+.edit-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.edit-post-form .form-field-title input {
+  width: 100%;
+}
+
+.edit-post-form .form-field-content {
+  width: 80%;
+}
+
+.edit-post-form .form-field-content textarea {
+  width: 100%;
+  min-height: 300px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-family: inherit;
+  font-size: 1em;
+  resize: vertical;
+}
+
+.edit-post-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.edit-post-form .form-buttons-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 :root {
